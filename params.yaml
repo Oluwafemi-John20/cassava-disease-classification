@@ -1,8 +1,8 @@
-AUGMENTATION: True
-IMAGE_SIZE: [224, 224, 3]
+AUGMENTATION: True 
+IMAGE_SIZE: [224, 224, 3] #Desired image size
 BATCH_SIZE: 16
 INCLUDE_TOP: False
-EPOCHS: 2
-CLASSES: 5
+EPOCHS: 2 #Increase the number of epochs to improve the model accuracy.
+CLASSES: 5 # Number of classes to be predicted by the model
 WEIGHTS: imagenet #InceptionResNetV2
 LEARNING_RATE: 0.01

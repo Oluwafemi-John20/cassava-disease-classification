@@ -1,10 +1,12 @@
 import os
+from pathlib import Path
 from cassava_disease_project.constants import *
 from cassava_disease_project.utils.common import read_yaml, create_directories
 from cassava_disease_project.entity.config_entity import (DataIngestionConfig, 
                                                           PrepareBaseModelConfig,
                                                           PrepareCallbacksConfig,
-                                                          TrainingConfig)
+                                                          TrainingConfig,
+                                                          EvaluationConfig)
 
 class ConfigurationManager:
     def __init__(
@@ -71,7 +73,7 @@ class ConfigurationManager:
         training = self.config.training
         prepare_base_model = self.config.prepare_base_model
         params = self.params
-        training_data = os.path.join(self.config.data_ingestion.unzip_dir, "train")
+        training_data = os.path.join(self.config.data_ingestion.unzip_dir, "train") #train: Name of the folder for training dataset
         create_directories([
             Path(training.root_dir)
         ])
@@ -88,4 +90,15 @@ class ConfigurationManager:
         )
 
         return training_config
+    
+    def get_validation_config(self) -> EvaluationConfig:
+        eval_config = EvaluationConfig(
+            path_to_model= Path("artifacts/training/model.h5"),
+            training_data= Path("artifacts/data_ingestion/train"),
+            all_params=self.params,
+            params_image_size=self.params.IMAGE_SIZE,
+            params_batch_size=self.params.BATCH_SIZE,
+        )
+        
+        return eval_config
     
